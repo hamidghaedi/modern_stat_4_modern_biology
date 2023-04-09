@@ -133,3 +133,43 @@ This is, of course, the same as <math xmlns="http://www.w3.org/1998/Math/MathML"
   <mn>6</mn>
   <mo stretchy="false">)</mo>
 </math>
+The probability  P(X <= 6) is the so-called **cumulative distribution function** at 6, and R has the function ```ppois``` for computing it, which we can use in either of the following two ways:
+```R
+1 - ppois(6, 0.5)
+#[1] 1.00238e-06
+# OR 
+ppois(6, 0.5, lower.tail = FALSE)
+#[1] 1.00238e-06
+```
+So <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mi>&#x3F5;</mi>
+  <mo>=</mo>
+  <mi>P</mi>
+  <mo stretchy="false">(</mo>
+  <mi>X</mi>
+  <mo>&#x2265;</mo>
+  <mn>7</mn>
+  <mo stretchy="false">)</mo>
+  <mo>=</mo>
+  <mn>1</mn>
+  <mo>&#x2212;</mo>
+  <mi>P</mi>
+  <mo stretchy="false">(</mo>
+  <mi>X</mi>
+  <mo>&#x2264;</mo>
+  <mn>6</mn>
+  <mo stretchy="false">)</mo>
+  <mo>&#x2243;</mo>
+  <msup>
+    <mn>10</mn>
+    <mrow data-mjx-texclass="ORD">
+      <mo>&#x2212;</mo>
+      <mn>6</mn>
+    </mrow>
+  </msup>
+  <mo>.</mo>
+</math>
+
+The above calculation is not the correct computation in this case.We looked at all 100 positions, looked for the largest value and found that it was 7. Due to this selection, a value as large as 7 is more likely to occur than if we only looked at one position.
+So instead of asking what the chances are of seeing a Poisson(0.5) as large as 7, we should ask ourselves, what are the chances that the maximum of 100 Poisson(0.5) trials is as large as 7? If we follow the extereme value analysis (code and calculation not shown here), the probability would be 10^-4 (vs 10^-6 above).
+
