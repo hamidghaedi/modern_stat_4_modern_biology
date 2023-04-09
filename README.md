@@ -18,4 +18,4 @@ dpois(x = 0:12, lambda = 5)
 # Plot
 barplot(dpois(0:12, 5), names.arg = 0:12, col = "red", main = "Probabilities of seeing 0,1,2,…,12 mutations, as modeled by the Poisson(5) distribution")
 ```
-[Fig_1](https://github.com/hamidghaedi/modern_stat_4_modern_biology/blob/main/figs/Fig_1.png)
+![Fig_1](https://github.com/hamidghaedi/modern_stat_4_modern_biology/blob/main/figs/Fig_1.png)
