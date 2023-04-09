@@ -94,3 +94,6 @@ barplot(e100, ylim = c(0, 7), width = 0.7, xlim = c(-0.5, 100.5),
 ```
 ![Fig_4](https://github.com/hamidghaedi/modern_stat_4_modern_biology/blob/main/figs/Fig_1_4.png)
 
+The spike in the above figure is striking. What are the chances of seeing a value as large as 7, if no epitope is present?
+If we look for the probability of seeing a number as big as 7 (or larger) when considering one Poisson(0.5) random variable, the answer can be calculated in closed form as:
+P(X\geq 7)= \sum_{k=7}^\infty P(X=k).
