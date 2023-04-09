@@ -255,3 +255,11 @@ Just as in the binomial case the sum of the probabilities of all possible outcom
   <mo>=</mo>
   <mn>1</mn>
 </math>
+
+Suppose we have four boxes that are equally likely. Using the formula, what is the probability of observing 4 in the first box, 2 in the second box, and none in the two other boxes?
+
+```R
+dmultinom(c(4, 2, 0, 0), prob = rep(1/4, 4))
+# [1] 0.003662109
+```
+### 1.4.1 Simulating for power
