@@ -122,3 +122,14 @@ If we look for the probability of seeing a number as big as 7 (or larger) when c
   <mo stretchy="false">)</mo>
   <mo>.</mo>
 </math>
+
+This is, of course, the same as <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mn>1</mn>
+  <mo>&#x2212;</mo>
+  <mi>P</mi>
+  <mo stretchy="false">(</mo>
+  <mi>X</mi>
+  <mo>&#x2264;</mo>
+  <mn>6</mn>
+  <mo stretchy="false">)</mo>
+</math>
