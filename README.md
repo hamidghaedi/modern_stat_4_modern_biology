@@ -3,7 +3,7 @@ A worksheet for Modern Statistics for Modern Biology book
 
 ## 1  Generative Models for Discrete Data
 
-### 1.2 A real example
+## 1.2 A real example
 
 ```R
 dpois(x = 3, lambda = 5)
@@ -20,7 +20,7 @@ barplot(dpois(0:12, 5), names.arg = 0:12, col = "red", main = "Probabilities of 
 ```
 ![Fig_1](https://github.com/hamidghaedi/modern_stat_4_modern_biology/blob/main/figs/Fig_1.png) 
 
-### 1.3 Using discrete probability models
+## 1.3 Using discrete probability models
 
 ```R
 genotype = c("AA","AO","BB","AO","OO","AO","AA","BO","BO",
@@ -173,3 +173,85 @@ So <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 The above calculation is not the correct computation in this case.We looked at all 100 positions, looked for the largest value and found that it was 7. Due to this selection, a value as large as 7 is more likely to occur than if we only looked at one position.
 So instead of asking what the chances are of seeing a Poisson(0.5) as large as 7, we should ask ourselves, what are the chances that the maximum of 100 Poisson(0.5) trials is as large as 7? If we follow the extereme value analysis (code and calculation not shown here), the probability would be 10^-4 (vs 10^-6 above).
 
+#### Computing probabilities by simulation
+In the case we just saw, the theoretical probability calculation was quite simple and we could figure out the result by an explicit calculation. In practice, things tend to be more complicated, and we are better to compute our probabilities using the **Monte Carlo method**: a computer simulation based on our generative model that finds the probabilities of the events we’re interested in. Below, we generate 100,000 instances of picking the maximum from 100 Poisson distributed numbers.
+
+```R
+maxes = replicate(100000, {
+  max(rpois(100, 0.5))
+})
+table(maxes)
+
+#maxes
+#    1     2     3     4     5     6     7 
+#    8 23618 60579 14153  1498   135     9 
+
+```
+In 16 of 100000 trials, the maximum was 7 or larger. This gives the following approximation for <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>P</mi>
+  <mo stretchy="false">(</mo>
+  <msub>
+    <mi>X</mi>
+    <mrow data-mjx-texclass="ORD">
+      <mtext>max</mtext>
+    </mrow>
+  </msub>
+  <mo>&#x2265;</mo>
+  <mn>7</mn>
+  <mo stretchy="false">)</mo>
+</math>
+```R
+mean( maxes >= 7 )
+# 0.00009
+```
+Everything we have done up to now is only possible because we know the false positive rate per position, we know the number of patients assayed and the length of the protein, we suppose we have identically distributed independent draws from the model, and there are no unknown parameters. This is an example of probability or generative modeling: all the parameters are known and the mathematical theory allows us to work by deduction in a top-down fashion.
+If instead we are in the more realistic situation of knowing the number of patients and the length of the proteins, but don’t know the distribution of the data, then we have to use **statistical modeling**.
+
+## 1.4 Multinomial distributions: the case of DNA
+
+#### More than two outcomes.
+When modeling four possible outcomes, as for instance when studying counts of the four nucleotides [A,C,G] and [T], we need to extend the [binomial] model.
+we can label  probabilities like <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>p</mi>
+    <mi>A</mi>
+  </msub>
+  <mo>,</mo>
+  <msub>
+    <mi>p</mi>
+    <mi>C</mi>
+  </msub>
+  <mo>,</mo>
+  <msub>
+    <mi>p</mi>
+    <mi>G</mi>
+  </msub>
+  <mo>,</mo>
+  <msub>
+    <mi>p</mi>
+    <mi>T</mi>
+  </msub>
+</math>
+Just as in the binomial case the sum of the probabilities of all possible outcomes is 1, <math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msub>
+    <mi>p</mi>
+    <mi>A</mi>
+  </msub>
+  <mo>+</mo>
+  <msub>
+    <mi>p</mi>
+    <mi>C</mi>
+  </msub>
+  <mo>+</mo>
+  <msub>
+    <mi>p</mi>
+    <mi>G</mi>
+  </msub>
+  <mo>+</mo>
+  <msub>
+    <mi>p</mi>
+    <mi>T</mi>
+  </msub>
+  <mo>=</mo>
+  <mn>1</mn>
+</math>
